@@ -1,10 +1,10 @@
 plugins {
-	checkstyle
-	java
-	jacoco
-	id("org.springframework.boot") version "3.4.0"
-	id("io.spring.dependency-management") version "1.1.6"
-    id("com.github.spotbugs") version "6.0.26"
+    java
+    jacoco
+    checkstyle
+    id("org.springframework.boot") version libs.versions.spring.boot.get()
+    id("io.spring.dependency-management") version libs.versions.dependency.management.get()
+    id("com.github.spotbugs") version libs.versions.spotbugs.get()
 }
 
 group = "ru.job4j.devops"
@@ -33,32 +33,31 @@ tasks.jacocoTestCoverageVerification {
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	compileOnly("org.projectlombok:lombok:1.18.36")
-	annotationProcessor("org.projectlombok:lombok:1.18.36")
-	implementation("org.springframework.boot:spring-boot-starter-web")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-	testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
-	testImplementation("org.assertj:assertj-core:3.24.2")
+    compileOnly(libs.lombok)
+    annotationProcessor(libs.lombok.annotation)
+    implementation(libs.spring.boot.starter.web)
+    testImplementation(libs.spring.boot.starter.test)
+    testRuntimeOnly(libs.junit.jupiter)
+    testImplementation(libs.assertj.core)
 }
 
 tasks.withType<Test> {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 tasks.register<Zip>("zipJavaDoc") {
-    group = "documentation" // Группа, в которой будет отображаться задача
+    group = "documentation"
     description = "Packs the generated Javadoc into a zip archive"
 
-    dependsOn("javadoc") // Указываем, что задача зависит от выполнения javadoc
+    dependsOn("javadoc")
 
-    from("build/docs/javadoc") // Исходная папка для упаковки
-    archiveFileName.set("javadoc.zip") // Имя создаваемого архива
-    destinationDirectory.set(layout.buildDirectory.dir("archives")) // Директория, куда будет сохранен архив
+    from("build/docs/javadoc")
+    archiveFileName.set("javadoc.zip")
+    destinationDirectory.set(layout.buildDirectory.dir("archives"))
 }
 
 tasks.spotbugsMain {
