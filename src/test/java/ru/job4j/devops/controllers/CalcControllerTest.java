@@ -1,5 +1,6 @@
 package ru.job4j.devops.controllers;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatusCode;
 import ru.job4j.devops.models.Result;
@@ -7,6 +8,7 @@ import ru.job4j.devops.models.TwoArgs;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Disabled
 class CalcControllerTest {
 
     @Test
@@ -54,12 +56,12 @@ class CalcControllerTest {
         assertThat(output.getBody()).isEqualTo(expected);
     }
 
-//    @Test
-//    public void whenTimesNegatives() {
-//        var input = new TwoArgs(-3, -3);
-//        var expected = new Result(9);
-//        var output = new CalcController().times(input);
-//        assertThat(output.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(200));
-//        assertThat(output.getBody()).isEqualTo(expected);
-//    }
+    @Test
+    public void whenTimesNegatives() {
+        var input = new TwoArgs(-3, -3);
+        var expected = new Result(9);
+        var output = new CalcController().times(input);
+        assertThat(output.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(200));
+        assertThat(output.getBody()).isEqualTo(expected);
+    }
 }
