@@ -70,3 +70,4 @@ tasks.spotbugsMain {
 tasks.test {
     finalizedBy(tasks.spotbugsMain)
 }
+
