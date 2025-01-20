@@ -68,6 +68,13 @@ tasks.spotbugsMain {
 }
 
 tasks.test {
-    finalizedBy(tasks.spotbugsMain)
+    finalizedBy(tasks.spotbugsMain, tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
 }
 
