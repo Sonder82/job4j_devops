@@ -8,7 +8,6 @@ import ru.job4j.devops.models.TwoArgs;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 class CalcControllerTest {
 
     @Test
