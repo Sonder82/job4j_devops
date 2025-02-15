@@ -1,14 +1,18 @@
 rootProject.name = "DevOps"
 
+val remoteCacheUrl = "http://192.168.0.113:5071/"
+val remoteCachePush = true
+val remoteCacheUsername = "user863"
+val remoteCachePassword =  "qqkbjsp3263sic4bwbtawjsrme"
 buildCache {
     remote<HttpBuildCache> {
-        url = uri(System.getenv("GRADLE_REMOTE_CACHE_URL"))
+        url = uri(remoteCacheUrl)
         isAllowInsecureProtocol = true
         isAllowUntrustedServer = true
-        isPush = System.getenv("GRADLE_REMOTE_CACHE_PUSH").toBoolean()
+        isPush = remoteCachePush
         credentials {
-            username = System.getenv("GRADLE_REMOTE_CACHE_USERNAME")
-            password = System.getenv("GRADLE_REMOTE_CACHE_PASSWORD")
+            username = remoteCacheUsername
+            password = remoteCachePassword
         }
     }
 }

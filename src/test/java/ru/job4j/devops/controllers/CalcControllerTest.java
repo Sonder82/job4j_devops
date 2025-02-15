@@ -8,7 +8,7 @@ import ru.job4j.devops.models.TwoArgs;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Disabled
+
 class CalcControllerTest {
 
     @Test
