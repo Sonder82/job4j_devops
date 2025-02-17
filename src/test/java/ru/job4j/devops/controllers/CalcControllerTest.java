@@ -20,9 +20,9 @@ class CalcControllerTest {
     }
 
     @Test
-    public void whenOnePlusTwoThenThree() {
-        var input = new TwoArgs(1, 2);
-        var expected = new Result(3);
+    public void whenOnePlusTwoThenFour() {
+        var input = new TwoArgs(1, 3);
+        var expected = new Result(4);
         var output = new CalcController().summarise(input);
         assertThat(output.getStatusCode()).isEqualTo(HttpStatusCode.valueOf(200));
         assertThat(output.getBody()).isEqualTo(expected);
