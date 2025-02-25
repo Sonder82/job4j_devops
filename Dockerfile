@@ -1,7 +1,7 @@
 FROM openjdk:21-jdk as builder
 
 COPY . .
-RUN jar xf /build/libs/DevOps-1.0.0.jar
+RUN jar xf /job4j_devops/build/libs/DevOps-1.0.0.jar
 
 RUN jdeps --ignore-missing-deps -q \
     --recursive \
