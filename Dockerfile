@@ -1,4 +1,5 @@
-FROM openjdk:21-jdk as builder
+FROM gradle:8.11.1-jdk21 as builder
+
 WORKDIR /job4j_devops
 COPY . .
 RUN jar xf /job4j_devops/build/libs/DevOps-1.0.0.jar
