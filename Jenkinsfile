@@ -41,6 +41,13 @@ pipeline {
                 }
             }
         }
+        stage('Package') {
+                    steps {
+                        script {
+                            sh './gradlew build'
+                        }
+                    }
+                }
         stage('JaCoCo Report') {
             steps {
                 script {
