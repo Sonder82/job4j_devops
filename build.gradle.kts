@@ -41,12 +41,12 @@ dependencies {
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok.annotation)
     implementation(libs.spring.boot.starter.web)
-    implementation(libs.spring.boot.starter.data.jpa)
-    implementation(libs.liquibase.core)
-    implementation(libs.postgresql)
     testImplementation(libs.spring.boot.starter.test)
     testRuntimeOnly(libs.junit.jupiter)
     testImplementation(libs.assertj.core)
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation(libs.liquibase.core)
+    implementation(libs.postgresql)
 }
 
 tasks.withType<Test> {
