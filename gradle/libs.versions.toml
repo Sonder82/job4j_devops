@@ -12,6 +12,7 @@ liquibase-gradle = "3.0.1"
 jaxb-api = "2.3.1"
 logback = "1.5.15"
 picocli = "4.6.1"
+uzzu = "4.0.0"
 
 [libraries]
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
@@ -33,3 +34,4 @@ spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 dependency-management = { id = "io.spring.dependency-management", version.ref = "dependency-management" }
 spotbugs = { id = "com.github.spotbugs", version.ref = "spotbugs" }
 liquibase = { id = "org.liquibase.gradle", version.ref = "liquibase-gradle" }
+uzzu = {id = "co.uzzu.dotenv.gradle", version.ref = "uzzu"}
