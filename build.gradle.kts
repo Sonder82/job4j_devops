@@ -2,9 +2,10 @@ plugins {
     java
     jacoco
     checkstyle
-    id("org.springframework.boot") version libs.versions.spring.boot.get()
-    id("io.spring.dependency-management") version libs.versions.dependency.management.get()
-    id("com.github.spotbugs") version libs.versions.spotbugs.get()
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.dependency.management)
+    alias(libs.plugins.spotbugs)
+    alias(libs.plugins.liquibase)
 }
 
 group = "ru.job4j.devops"
@@ -37,17 +38,49 @@ repositories {
     mavenCentral()
 }
 
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.liquibase:liquibase-core:4.30.0")
+    }
+}
+
+
 dependencies {
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok.annotation)
     implementation(libs.spring.boot.starter.web)
+    implementation(libs.spring.boot.starter.data.jpa)
+    implementation(libs.liquibase.core)
+    implementation(libs.postgresql)
     testImplementation(libs.spring.boot.starter.test)
     testRuntimeOnly(libs.junit.jupiter)
     testImplementation(libs.assertj.core)
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation(libs.liquibase.core)
-    implementation(libs.postgresql)
+
+    liquibaseRuntime(libs.liquibase.core)
+    liquibaseRuntime(libs.postgresql)
+    liquibaseRuntime(libs.jaxb.api)
+    liquibaseRuntime(libs.logback.core)
+    liquibaseRuntime(libs.logback.classic)
+    liquibaseRuntime(libs.picocli)
 }
+
+liquibase {
+    activities.register("main") {
+        this.arguments = mapOf(
+            "logLevel"       to "info",
+            "url"            to "jdbc:postgresql://localhost:5432/job4j_devops",
+            "username"       to "postgres",
+            "password"       to "password",
+            "classpath"      to "src/main/resources",
+            "changelogFile"  to "db/changelog/db.changelog-master.xml"
+        )
+    }
+    runList = "main"
+}
+
 
 tasks.withType<Test> {
     useJUnitPlatform()
