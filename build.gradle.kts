@@ -71,6 +71,9 @@ dependencies {
 
 liquibase {
     activities.register("main") {
+        println("DB_URL in Liquibase: ${env.DB_URL.value}")
+        println("DB_USERNAME in Liquibase: ${env.DB_USERNAME.value}")
+
         this.arguments = mapOf(
             "logLevel"       to "info",
             "url"            to env.DB_URL.value,
@@ -82,7 +85,6 @@ liquibase {
     }
     runList = "main"
 }
-
 
 tasks.withType<Test> {
     useJUnitPlatform()
