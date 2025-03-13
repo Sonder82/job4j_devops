@@ -60,6 +60,7 @@ dependencies {
     testImplementation(libs.spring.boot.starter.test)
     testRuntimeOnly(libs.junit.jupiter)
     testImplementation(libs.assertj.core)
+    testImplementation("org.testcontainers:postgresql:1.20.4")
 
     liquibaseRuntime(libs.liquibase.core)
     liquibaseRuntime(libs.postgresql)
@@ -75,12 +76,12 @@ liquibase {
         println("DB_USERNAME in Liquibase: ${env.DB_USERNAME.value}")
 
         this.arguments = mapOf(
-            "logLevel"       to "info",
-            "url"            to env.DB_URL.value,
-            "username"       to env.DB_USERNAME.value,
-            "password"       to env.DB_PASSWORD.value,
-            "classpath"      to "src/main/resources",
-            "changelogFile"  to "db/changelog/db.changelog-master.xml"
+            "logLevel" to "info",
+            "url" to env.DB_URL.value,
+            "username" to env.DB_USERNAME.value,
+            "password" to env.DB_PASSWORD.value,
+            "classpath" to "src/main/resources",
+            "changelogFile" to "db/changelog/db.changelog-master.xml"
         )
     }
     runList = "main"
@@ -88,13 +89,6 @@ liquibase {
 
 tasks.withType<Test> {
     useJUnitPlatform()
-
-    tasks.named<Test>("test") {
-        systemProperty("spring.datasource.url", env.DB_URL.value)
-        systemProperty("spring.datasource.username", env.DB_USERNAME.value)
-        systemProperty("spring.datasource.password", env.DB_PASSWORD.value)
-    }
-
 }
 
 tasks.register<Zip>("zipJavaDoc") {
@@ -161,13 +155,47 @@ tasks.spotbugsMain {
 }
 
 tasks.test {
-    finalizedBy(tasks.spotbugsMain, tasks.jacocoTestReport)
+    finalizedBy(tasks.spotbugsMain)
 }
 
-tasks.jacocoTestReport {
-    reports {
-        xml.required.set(true)
-        html.required.set(true)
-    }
+tasks.named<Test>("test") {
+    systemProperty("spring.datasource.url", env.DB_URL.value)
+    systemProperty("spring.datasource.username", env.DB_USERNAME.value)
+    systemProperty("spring.datasource.password", env.DB_PASSWORD.value)
 }
+
+val integrationTest by sourceSets.creating {
+    java {
+        srcDir("src/integrationTest/java")
+    }
+    resources {
+        srcDir("src/integrationTest/resources")
+    }
+
+    // Let the integrationTest classpath include the main and test outputs
+    compileClasspath += sourceSets["main"].output + sourceSets["test"].output
+    runtimeClasspath += sourceSets["main"].output + sourceSets["test"].output
+}
+
+val integrationTestImplementation by configurations.getting {
+    extendsFrom(configurations["testImplementation"])
+}
+val integrationTestRuntimeOnly by configurations.getting {
+    extendsFrom(configurations["testRuntimeOnly"])
+}
+
+tasks.register<Test>("integrationTest") {
+    description = "Runs the integration tests."
+    group = "verification"
+
+    testClassesDirs = integrationTest.output.classesDirs
+    classpath = integrationTest.runtimeClasspath
+
+    // Usually run after regular unit tests
+    shouldRunAfter(tasks.test)
+}
+tasks.check {
+    dependsOn("integrationTest")
+}
+
 
