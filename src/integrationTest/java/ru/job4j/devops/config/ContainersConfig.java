@@ -34,6 +34,4 @@ public abstract class ContainersConfig {
         registry.add("spring.datasource.username", POSTGRE::getUsername);
         registry.add("spring.datasource.password", POSTGRE::getPassword);
     }
-
-
 }
