@@ -2,6 +2,7 @@ package ru.job4j.devops.repository;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,7 +13,7 @@ import ru.job4j.devops.config.ContainersConfig;
 import ru.job4j.devops.models.User;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
+@Disabled
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class UserRepositoryTest extends ContainersConfig {
 

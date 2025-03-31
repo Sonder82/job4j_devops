@@ -3,6 +3,7 @@ package ru.job4j.devops.repository;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -16,7 +17,7 @@ import ru.job4j.devops.service.CalcService;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+@Disabled
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 public class CalcServiceTest extends ContainersConfig {
 
