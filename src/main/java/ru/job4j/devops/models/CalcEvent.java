@@ -32,6 +32,7 @@ public class CalcEvent {
     @Column(name = "create_date")
     private LocalDate createDate;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "calc_event_type")
     private CalcEventType calcEventType;
 }
