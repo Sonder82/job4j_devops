@@ -7,11 +7,24 @@ plugins {
     alias(libs.plugins.spotbugs)
     alias(libs.plugins.liquibase)
     alias(libs.plugins.uzzu)
+    id("maven-publish")
 
 }
 
 group = "ru.job4j.devops"
 version = "1.0.0"
+
+repositories {
+    mavenCentral()
+    maven {
+        url = uri("http://192.168.0.104:8081/repository/maven-public/")
+        isAllowInsecureProtocol = true
+        credentials {
+            username = "admin"
+            password = "devops"
+        }
+    }
+}
 
 tasks.jacocoTestCoverageVerification {
     enabled = false
@@ -36,8 +49,23 @@ tasks.jacocoTestCoverageVerification {
     }
 }
 
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+        }
+    }
+
 repositories {
-    mavenCentral()
+    maven {
+        url = uri("http://192.168.0.104:8081/repository/maven-releases/")
+        isAllowInsecureProtocol = true
+        credentials {
+            username = "admin"
+            password = "devops"
+        }
+    }
+}
 }
 
 buildscript {
