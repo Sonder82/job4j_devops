@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'agent-jdk21' }
+    agent { label 'agent-kube' }
 
     tools {
         git 'Default'
@@ -78,6 +78,24 @@ environment {
                         sh 'docker build -t job4j_devops .'
                     }
                 }
+    }
+    stage('Check Git Tag') {
+        steps {
+            script {
+                def gitTag = sh(script: 'git describe --tags --exact-match || true', returnStdout: true).trim()
+
+                if (gitTag) {
+                    def imageName = "192.168.6.52:8081/my-docker-repo/job4j_devops:${gitTag}"
+                    echo "Tag found: ${gitTag}. Proceeding with Docker build and push to Nexus."
+
+                    sh "docker build -t ${imageName} ."
+                    sh "docker login 192.168.0.106:8082 -u devops -p password"
+                    sh "docker push ${imageName}"
+                } else {
+                    echo "No Git tag found. Skipping Docker build and push."
+                }
+            }
+        }
     }
 
     post {

@@ -12,12 +12,12 @@ plugins {
 }
 
 group = "ru.job4j.devops"
-version = "1.0.0"
+version = "1.1.0"
 
 repositories {
     mavenCentral()
     maven {
-        url = uri("http://192.168.0.104:8081/repository/maven-public/")
+        url = uri("http://192.168.6.52:8081/repository/maven-public/")
         isAllowInsecureProtocol = true
         credentials {
             username = "admin"
