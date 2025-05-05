@@ -89,7 +89,7 @@ environment {
                     echo "Tag found: ${gitTag}. Proceeding with Docker build and push to Nexus."
 
                     sh "docker build -t ${imageName} ."
-                    sh "docker login 192.168.0.106:8082 -u devops -p password"
+                    sh "docker login 192.168.0.106:8081 -u devops -p password"
                     sh "docker push ${imageName}"
                 } else {
                     echo "No Git tag found. Skipping Docker build and push."
