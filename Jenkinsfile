@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'agent-kube' }
+    agent { label 'agent-jdk21' }
 
     tools {
         git 'Default'
