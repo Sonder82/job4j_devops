@@ -90,7 +90,7 @@ pipeline {
 
                         // Входим в Docker репозиторий Nexus
                         withCredentials([usernamePassword(credentialsId: 'nexusCreds', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
-                                            sh 'docker login 192.168.0.106:8082 -u $NEXUS_USER -p $NEXUS_PASS'
+                                            sh 'docker login 192.168.0.107:8081 -u $NEXUS_USER -p $NEXUS_PASS'
                                             sh "docker push ${imageName}"
                                         }
                     } else {
