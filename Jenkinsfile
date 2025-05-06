@@ -87,14 +87,14 @@ pipeline {
 
                     if (gitTag) {
                         // Создаем имя Docker-образа с тегом
-                        def imageName = "192.168.6.52:8081/my-docker-repo/job4j_devops:${gitTag}"
+                        def imageName = "192.168.0.107:8081/my-docker-repo/job4j_devops:${gitTag}"
                         echo "Tag found: ${gitTag}. Proceeding with Docker build and push to Nexus."
 
                         // Строим Docker образ с тегом
                         sh "docker build -t ${imageName} ."
 
                         // Входим в Docker репозиторий Nexus
-                        sh "docker login 192.168.0.106:8081 -u devops -p password"
+                        sh "docker login 192.168.0.107:8081 -u devops -p password"
 
                         // Публикуем образ в Nexus
                         sh "docker push ${imageName}"

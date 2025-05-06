@@ -58,7 +58,7 @@ publishing {
 
 repositories {
     maven {
-        url = uri("http://192.168.0.104:8081/repository/maven-releases/")
+        url = uri("http://192.168.0.107:8081/repository/maven-releases/")
         isAllowInsecureProtocol = true
         credentials {
             username = "admin"
