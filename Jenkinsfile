@@ -74,7 +74,6 @@ pipeline {
             }
         }
 
-
         stage('Check Git Tag') {
             steps {
                 script {
@@ -90,10 +89,10 @@ pipeline {
                         sh "docker build -t ${imageName} ."
 
                         // Входим в Docker репозиторий Nexus
-                        sh "docker login 192.168.0.107:8081 -u devops -p password"
-
-                        // Публикуем образ в Nexus
-                        sh "docker push ${imageName}"
+                        withCredentials([usernamePassword(credentialsId: 'nexusCreds', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
+                                            sh 'docker login 192.168.0.106:8082 -u $NEXUS_USER -p $NEXUS_PASS'
+                                            sh "docker push ${imageName}"
+                                        }
                     } else {
                         echo "No Git tag found. Skipping Docker build and push."
                     }
